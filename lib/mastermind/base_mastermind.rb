@@ -28,11 +28,11 @@ class BaseMastermind
   end
 
   def feedback(guess)
-    correct_pos = check_position(code, guess)
+    correct_pos = check_position(code, guess).count(true)
     correct_color = check_color(
       code.filter.with_index { |_, idx| !correct_pos[idx] },
       guess.filter.with_index { |_, idx| !correct_pos[idx] }
     )
-    { position: correct_pos.count(true), color: correct_color }
+    ("b" * correct_pos + "w" * correct_color).ljust(4, "x")
   end
 end
