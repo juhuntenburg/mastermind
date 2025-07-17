@@ -8,7 +8,7 @@ class HumanMastermind < BaseMastermind
 
   def initialize(debug: false)
     @code = COLORS.values_at(*4.times.map { rand(6) })
-    super(code, debug: debug)
+    print code if debug
   end
 
   def play

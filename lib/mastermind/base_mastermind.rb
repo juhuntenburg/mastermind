@@ -6,11 +6,6 @@ class BaseMastermind
   COLOR_NAMES = "R(ed) B(lue) G(reen) Y(ellow) O(range) P(urple)"
   attr_accessor :code
 
-  def initialize(code, debug: false)
-    @code = code
-    print code if debug
-  end
-
   def enter_code
     loop do
       puts "Enter your code, four characters of #{COLOR_NAMES}: "

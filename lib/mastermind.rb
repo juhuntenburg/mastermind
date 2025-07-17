@@ -8,4 +8,5 @@ game = HumanMastermind.new(debug: true)
 game.play
 
 
-game = ComputerMastermind.new(debug: true)
+game = ComputerMastermind.new
+game.play

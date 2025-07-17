@@ -4,8 +4,7 @@ require_relative "base_mastermind"
 
 class ComputerMastermind < BaseMastermind
 
-  def initialize(debug: false)
+  def play
     @code = enter_code
-    super(code, debug: debug)
   end
 end
