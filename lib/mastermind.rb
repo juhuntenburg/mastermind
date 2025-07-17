@@ -1,34 +1,13 @@
 # frozen_string_literal: true
 
-# Class to initiate and play the game
+# Base class for what is common to human and computer games
 class Mastermind
   COLORS = %w[R B G Y O P].freeze
   COLOR_NAMES = "R(ed) B(lue) G(reen) Y(ellow) O(range) P(urple)"
   attr_accessor :code
 
-  def initialize
-    @code = COLORS.values_at(*4.times.map { rand(6) })
-  end
-
-  def play
-    (1..12).each do |i|
-      puts "\nROUND #{i}"
-      feedback = feedback(guess)
-      puts "Correct position: #{feedback[:position]}"
-      puts "Correct color: #{feedback[:color]}"
-      return puts "You cracked the code!" if feedback[:position] == 4
-    end
-    puts "You ran out of trials, the correct code was: #{code.join}"
-  end
-
-  def guess
-    loop do
-      puts "Enter your guess, four characters of #{COLOR_NAMES}: "
-      guess = gets.chomp.upcase.gsub(/[^RBGYOP]/, "").chars
-      return guess if guess.size == 4
-
-      print "Invalid guess. "
-    end
+  def initialize(code)
+    @code = code
   end
 
   def check_position(code, guess)
@@ -51,6 +30,3 @@ class Mastermind
     { position: correct_pos.count(true), color: correct_color }
   end
 end
-
-game = Mastermind.new
-game.play
