@@ -4,13 +4,12 @@
 class BaseMastermind
   COLORS = %w[R B G Y O P].freeze
   COLOR_NAMES = "R(ed) B(lue) G(reen) Y(ellow) O(range) P(urple)"
-  attr_accessor :code
 
   def enter_code
     loop do
       puts "Enter your code, four characters of #{COLOR_NAMES}: "
-      code = gets.chomp.upcase.gsub(/[^RBGYOP]/, "").chars
-      return code if code.size == 4
+      entered_code = gets.chomp.upcase.gsub(/[^RBGYOP]/, "").chars
+      return entered_code if entered_code.size == 4
 
       print "Invalid code. "
     end
@@ -27,12 +26,12 @@ class BaseMastermind
     end
   end
 
-  def feedback(guess)
-    correct_pos = check_position(code, guess).count(true)
+  def feedback(code, guess)
+    correct_pos = check_position(code, guess)
     correct_color = check_color(
       code.filter.with_index { |_, idx| !correct_pos[idx] },
       guess.filter.with_index { |_, idx| !correct_pos[idx] }
     )
-    ("b" * correct_pos + "w" * correct_color).ljust(4, "x")
+    ("b" * correct_pos.count(true) + "w" * correct_color).ljust(4, "x")
   end
 end
