@@ -1,13 +1,24 @@
 # frozen_string_literal: true
 
 # Base class for what is common to human and computer games
-class Mastermind
+class BaseMastermind
   COLORS = %w[R B G Y O P].freeze
   COLOR_NAMES = "R(ed) B(lue) G(reen) Y(ellow) O(range) P(urple)"
   attr_accessor :code
 
-  def initialize(code)
+  def initialize(code, debug: false)
     @code = code
+    print code if debug
+  end
+
+  def enter_code
+    loop do
+      puts "Enter your code, four characters of #{COLOR_NAMES}: "
+      code = gets.chomp.upcase.gsub(/[^RBGYOP]/, "").chars
+      return code if code.size == 4
+
+      print "Invalid code. "
+    end
   end
 
   def check_position(code, guess)
