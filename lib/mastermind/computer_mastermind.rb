@@ -26,21 +26,28 @@ class ComputerMastermind < BaseMastermind
     puts "Computer ran out of trials, the correct code was: #{code.join}"
   end
 
+  # https://puzzling.stackexchange.com/questions/546/clever-ways-to-solve-mastermind
   def next_guess(guess, result)
     remaining.delete(guess)
     self.plausible = plausible.select { |p| feedback(guess, p) == result }
     scores = minimax(remaining, plausible)
+    select_best(scores, plausible)
   end
 
   def minimax(remaining, plausible)
     scores = {}
     remaining.each do |guess|
-      comb_score = results.map do |result|
-        plausible.select { |p| feedback(guess, p) == result.join }.size
+      guess_score = results.map do |result|
+        plausible.size - plausible.select { |p| feedback(guess, p) == result.join }.size
       end
-      scores[guess.join] = comb_score.min
+      scores[guess] = guess_score.min
     end
     scores
+  end
+
+  def select_best(scores, plausible)
+    options = scores.select { |_k, v| v == scores.values.max }.keys
+    options.find { |option| plausible.include?(option) } || options[0]
   end
 
 end
